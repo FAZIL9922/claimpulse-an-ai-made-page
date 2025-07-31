@@ -138,22 +138,23 @@ const Home = () => {
               return (
                 <Card 
                   key={feature.title}
-                  className="feature-card group cursor-pointer"
+                  className="feature-card group cursor-pointer animate-card-reveal"
                   onClick={() => navigate(feature.href)}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <CardContent className="p-6">
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                       <Icon className="h-6 w-6 text-white" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-muted-foreground text-sm">{feature.description}</p>
+                    <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">{feature.title}</h3>
+                    <p className="text-muted-foreground text-sm mb-4 flex-grow leading-relaxed">{feature.description}</p>
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="mt-4 w-full group-hover:bg-primary/10 group-hover:text-primary transition-colors"
+                      className="mt-auto w-full group-hover:bg-primary/15 group-hover:text-primary group-hover:shadow-md transition-all duration-300 hover-lift"
                     >
-                      Explore →
+                      <span className="group-hover:mr-2 transition-all duration-300">Explore</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                     </Button>
                   </CardContent>
                 </Card>
