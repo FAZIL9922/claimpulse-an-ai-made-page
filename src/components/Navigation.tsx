@@ -89,11 +89,11 @@ const Navigation = () => {
               )}
             </Button>
 
-            {/* Mobile Menu Button */}
+            {/* Menu Button - Available on all screen sizes */}
             <Button
               variant="outline"
               size="sm"
-              className="md:hidden p-2"
+              className="p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? (
@@ -105,10 +105,10 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Full Navigation Menu */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 glass rounded-lg mt-2 mb-4">
+          <div className="absolute top-full left-0 w-full z-40">
+            <div className="px-2 pt-2 pb-3 space-y-1 glass rounded-lg mt-2 mb-4 mx-4">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 return (
