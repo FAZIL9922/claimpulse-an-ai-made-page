@@ -14,7 +14,7 @@ import {
   Zap,
   Heart
 } from "lucide-react";
-import healthcareBg from "@/assets/healthcare-bg.jpg";
+import stethoscopeBg from "@/assets/stethoscope-bg.jpg";
 
 // ===========================
 // CORE FEATURES ROADMAP
@@ -93,8 +93,8 @@ const Home = () => {
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
         <div className="absolute inset-0 gradient-animate opacity-30"></div>
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-5" 
-          style={{ backgroundImage: `url(${healthcareBg})` }}
+          className="absolute inset-0 bg-cover bg-center opacity-10" 
+          style={{ backgroundImage: `url(${stethoscopeBg})` }}
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
