@@ -244,6 +244,47 @@ const Glossary = () => {
           </CardContent>
         </Card>
 
+        {/* Recently Viewed Section - Moved here from bottom */}
+        {recentTerms.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center mb-6">
+              <Clock className="h-6 w-6 text-primary mr-3" />
+              <h2 className="text-2xl font-bold">Recently Viewed</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {recentTerms.map((term, index) => {
+                if (!term) return null;
+                const CategoryIcon = getCategoryIcon(term.category);
+                return (
+                  <Card key={index} className="feature-card cursor-pointer hover:scale-105 transition-transform">
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <CategoryIcon className="h-5 w-5 text-primary" />
+                        <h3 className="font-semibold text-lg">{term.term}</h3>
+                      </div>
+                      <p className="text-muted-foreground text-sm line-clamp-2 mb-3">{term.definition}</p>
+                      <div className="flex items-center justify-between">
+                        <Badge className={getCategoryColor(term.category)} variant="secondary">
+                          {categories.find(cat => cat.id === term.category)?.name}
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSearchTerm(term.term)}
+                          className="text-xs"
+                        >
+                          <Eye className="h-3 w-3 mr-1" />
+                          View
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Glossary Terms */}
         <div className="space-y-6">
           {filteredTerms.map((term, index) => {
@@ -305,46 +346,6 @@ const Glossary = () => {
           })}
         </div>
 
-        {/* Recently Viewed Section */}
-        {recentTerms.length > 0 && (
-          <div className="mt-12">
-            <div className="flex items-center mb-6">
-              <Clock className="h-6 w-6 text-primary mr-3" />
-              <h2 className="text-2xl font-bold">Recently Viewed</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {recentTerms.map((term, index) => {
-                if (!term) return null;
-                const CategoryIcon = getCategoryIcon(term.category);
-                return (
-                  <Card key={index} className="feature-card cursor-pointer hover:scale-105 transition-transform">
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <CategoryIcon className="h-5 w-5 text-primary" />
-                        <h3 className="font-semibold text-lg">{term.term}</h3>
-                      </div>
-                      <p className="text-muted-foreground text-sm line-clamp-2 mb-3">{term.definition}</p>
-                      <div className="flex items-center justify-between">
-                        <Badge className={getCategoryColor(term.category)} variant="secondary">
-                          {categories.find(cat => cat.id === term.category)?.name}
-                        </Badge>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setSearchTerm(term.term)}
-                          className="text-xs"
-                        >
-                          <Eye className="h-3 w-3 mr-1" />
-                          View
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        )}
 
         {/* No results */}
         {filteredTerms.length === 0 && (

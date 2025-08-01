@@ -16,8 +16,17 @@ import {
 } from "lucide-react";
 import healthcareBg from "@/assets/healthcare-bg.jpg";
 
+// ===========================
+// CORE FEATURES ROADMAP
+// ===========================
+// This component serves as the main landing page and feature directory
+// Future development should integrate backend services for each feature
+
 const Home = () => {
   const navigate = useNavigate();
+
+  // TODO: Add analytics tracking for feature navigation
+  // Import analytics service: import { trackFeatureClick } from '@/services/analytics';
 
   const features = [
     {

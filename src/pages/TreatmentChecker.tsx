@@ -6,7 +6,23 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, AlertTriangle, Search, Heart, DollarSign, Clock } from "lucide-react";
 
+// ===========================
+// TREATMENT CHECKER MODULE
+// ===========================
+// This module checks treatment coverage and suggests alternatives
+// TODO: Integrate with insurance provider APIs and treatment databases
+
+// Import additional modules or services here:
+// import { InsuranceProviderAPI } from '@/api/insuranceProvider'
+// import { TreatmentDatabaseService } from '@/services/treatmentDatabase'
+// import { CoverageCalculatorService } from '@/services/coverageCalculator'
+
 const TreatmentChecker = () => {
+  // Add your Treatment Checker logic here
+  // - Real-time coverage verification
+  // - Treatment database lookup
+  // - Alternative treatment suggestions
+  // - Cost estimation algorithms
   const [treatment, setTreatment] = useState("");
   const [checking, setChecking] = useState(false);
   const [results, setResults] = useState<any>(null);

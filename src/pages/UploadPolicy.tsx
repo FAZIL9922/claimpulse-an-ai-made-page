@@ -5,7 +5,24 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Upload, FileText, CheckCircle, AlertCircle, Eye, Download } from "lucide-react";
 
+// ===========================
+// POLICY DECODER MODULE
+// ===========================
+// This module processes and simplifies insurance policy documents
+// TODO: Integrate with document processing AI and policy analysis services
+
+// Import additional modules or services here:
+// import { PolicyParsingService } from '@/services/policyParsing'
+// import { DocumentProcessingAPI } from '@/api/documentProcessing'
+// import { GlossaryService } from '@/services/glossary'
+// import { FileStorageService } from '@/services/fileStorage'
+
 const UploadPolicy = () => {
+  // Add your Policy Decoder logic here
+  // - PDF document processing and text extraction
+  // - AI-powered policy clause analysis
+  // - Automatic glossary term detection
+  // - Simplified explanation generation
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);

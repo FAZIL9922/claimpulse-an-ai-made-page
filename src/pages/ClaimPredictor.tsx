@@ -5,7 +5,23 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { TrendingUp, Upload, Target, AlertTriangle, CheckCircle, FileText, Lightbulb } from "lucide-react";
 
+// ===========================
+// CLAIM PREDICTOR MODULE
+// ===========================
+// This module predicts claim approval likelihood using AI/ML analysis
+// TODO: Integrate with backend ML models and claim processing APIs
+
+// Import additional modules or services here:
+// import { ClaimAnalysisService } from '@/services/claimAnalysis'
+// import { MLPredictionAPI } from '@/api/mlPrediction'
+// import { HistoricalDataService } from '@/services/historicalData'
+
 const ClaimPredictor = () => {
+  // Add your Claim Predictor logic here
+  // - File processing and validation
+  // - ML model integration for prediction
+  // - Risk assessment algorithms
+  // - Historical data comparison
   const [claimFile, setClaimFile] = useState<File | null>(null);
   const [documentsFile, setDocumentsFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
