@@ -107,26 +107,28 @@ const Navigation = () => {
 
         {/* Full Navigation Menu */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full z-40">
-            <div className="px-2 pt-2 pb-3 space-y-1 glass rounded-lg mt-2 mb-4 mx-4">
-              {navigation.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                      location.pathname === item.href
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
+          <div className="absolute top-full left-0 w-full z-50">
+            <div className="backdrop-blur-md bg-background/95 shadow-xl border border-border/50 rounded-lg mt-2 mb-4 mx-4 overflow-hidden">
+              <div className="px-3 pt-3 pb-4 space-y-2">
+                {navigation.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-lg font-semibold transition-all duration-200 hover:scale-[1.02] ${
+                        location.pathname === item.href
+                          ? "bg-primary text-primary-foreground shadow-md"
+                          : "text-foreground hover:text-primary hover:bg-primary/5 hover:shadow-sm"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Icon className="h-6 w-6 flex-shrink-0" />
+                      <span className="font-medium">{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}
