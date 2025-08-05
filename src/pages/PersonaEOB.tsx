@@ -1,27 +1,19 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, User, Briefcase, Home, BarChart3, Eye, DollarSign, Calendar } from "lucide-react";
-
-// ===========================
-// PERSONA-BASED EOB MODULE
-// ===========================
-// This module provides personalized EOB interfaces for different user types
-// TODO: Integrate with user preference storage and accessibility features
-
-// Import additional modules or services here:
-// import { UserPreferencesService } from '@/services/userPreferences'
-// import { AccessibilityService } from '@/services/accessibility'
-// import { PersonalizationAPI } from '@/api/personalization'
+import { Users, User, Briefcase, Home, BarChart3, Eye, DollarSign, Calendar, Upload, FileText } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useTestCases } from "@/hooks/useTestCases";
+import { useToast } from "@/hooks/use-toast";
 
 const PersonaEOB = () => {
-  // Add your Persona-Based EOB logic here
-  // - User preference management
-  // - Interface customization
-  // - Accessibility enhancements
-  // - Personalized content delivery
   const [selectedPersona, setSelectedPersona] = useState("family");
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+  const { testCases, currentTestCase, nextTestCase } = useTestCases('persona-eob');
 
   const personas = [
     {
@@ -92,6 +84,32 @@ const PersonaEOB = () => {
       totalCoinsurance: 64.00,
       totalPaidByInsurance: 256.00,
       totalPatientResponsibility: 144.00
+    }
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadedFile(file);
+    setIsLoading(true);
+
+    try {
+      // Simulate processing time
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      
+      // Get next test case and apply its persona
+      const testCase = nextTestCase();
+      const newPersona = testCase.mockData.targetPersona;
+      setSelectedPersona(newPersona);
+      
+      // Show success message
+      toast({
+        title: "Document Analyzed Successfully",
+        description: `EOB analyzed for ${newPersona} persona - ${testCase.name}`,
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -378,46 +396,104 @@ const PersonaEOB = () => {
           </p>
         </div>
 
-        {/* Persona Selection */}
+        {/* File Upload Section */}
         <Card className="feature-card mb-8">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Eye className="h-5 w-5" />
-              <span>Choose Your View</span>
+              <Upload className="h-5 w-5" />
+              <span>Upload EOB Document</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {personas.map((persona) => (
-                <button
-                  key={persona.id}
-                  onClick={() => setSelectedPersona(persona.id)}
-                  className={`p-6 text-left border rounded-lg transition-all hover:scale-105 ${
-                    selectedPersona === persona.id
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border hover:border-primary/50"
-                  }`}
-                >
-                  <div className="text-center mb-4">
-                    <span className="text-4xl">{persona.icon}</span>
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2">{persona.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{persona.description}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {persona.features.map((feature, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {feature}
-                      </Badge>
-                    ))}
-                  </div>
-                </button>
-              ))}
+            <div className="space-y-4">
+              <div
+                className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors cursor-pointer"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <div className="text-lg font-medium mb-2">Drop your EOB document here</div>
+                <div className="text-muted-foreground mb-4">or click to browse files</div>
+                <Button variant="outline">
+                  <Upload className="h-4 w-4 mr-2" />
+                  Select File
+                </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+              </div>
+              {uploadedFile && (
+                <div className="text-center text-sm text-muted-foreground">
+                  Selected: {uploadedFile.name}
+                </div>
+              )}
+              {currentTestCase && (
+                <div className="text-center p-4 bg-muted/50 rounded-lg">
+                  <div className="text-sm font-medium text-muted-foreground">Current Test Case:</div>
+                  <div className="font-semibold">{currentTestCase.name}</div>
+                  <div className="text-sm text-muted-foreground">{currentTestCase.description}</div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
 
-        {/* Persona-specific Content */}
-        {renderPersonaContent()}
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-12">
+            <LoadingSpinner text="AI Analyzing..." />
+          </div>
+        )}
+
+        {/* Persona Selection */}
+        {!isLoading && (
+          <Card className="feature-card mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Eye className="h-5 w-5" />
+                <span>Choose Your View</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {personas.map((persona) => (
+                  <button
+                    key={persona.id}
+                    onClick={() => setSelectedPersona(persona.id)}
+                    className={`p-6 text-left border rounded-lg transition-all hover:scale-105 ${
+                      selectedPersona === persona.id
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                  >
+                    <div className="text-3xl mb-2">{persona.icon}</div>
+                    <div className="font-semibold mb-2">{persona.name}</div>
+                    <div className="text-sm text-muted-foreground mb-3">
+                      {persona.description}
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {persona.features.map((feature, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Dynamic Content */}
+        {!isLoading && (
+          <div className="animate-fade-in-up">
+            {renderPersonaContent()}
+          </div>
+        )}
       </div>
     </div>
   );

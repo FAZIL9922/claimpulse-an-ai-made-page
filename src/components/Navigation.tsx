@@ -76,10 +76,10 @@ const Navigation = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:scale-105 hover-lift ${
                     location.pathname === item.href
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                      ? "bg-primary text-primary-foreground shadow-lg"
+                      : "text-muted-foreground hover:text-foreground hover:bg-primary/10 dark:hover:bg-primary/20"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -147,10 +147,10 @@ const Navigation = () => {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-lg font-semibold transition-all duration-200 hover:scale-[1.02] ${
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-lg font-semibold transition-all duration-200 hover:scale-[1.02] hover-lift ${
                         location.pathname === item.href
-                          ? "bg-primary text-primary-foreground shadow-md"
-                          : "text-foreground hover:text-primary hover:bg-primary/5 hover:shadow-sm"
+                          ? "bg-primary text-primary-foreground shadow-lg border border-primary/30"
+                          : "text-foreground hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 hover:shadow-md dark:hover:border-primary/30 hover:border hover:border-primary/20"
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
