@@ -186,15 +186,15 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-4xl font-bold text-primary mb-2">99%</div>
-              <div className="text-foreground">Accuracy Rate</div>
+              <div className="text-card-foreground font-medium">Accuracy Rate</div>
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-secondary mb-2">10k+</div>
-              <div className="text-foreground">Claims Processed</div>
+              <div className="text-card-foreground font-medium">Claims Processed</div>
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-accent mb-2">24/7</div>
-              <div className="text-foreground">AI Assistant</div>
+              <div className="text-card-foreground font-medium">AI Assistant</div>
             </div>
           </div>
         </div>
