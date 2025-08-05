@@ -111,7 +111,7 @@ const Home = () => {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
               <span className="gradient-text">ClaimPulse</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <p className="text-xl md:text-2xl text-foreground mb-8 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               Your AI-powered healthcare insurance assistant. Simplifying claims, coverage, and documentation with intelligent insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
