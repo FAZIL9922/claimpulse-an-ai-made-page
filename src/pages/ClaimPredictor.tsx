@@ -165,7 +165,7 @@ const ClaimPredictor = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-muted/30">
+    <div className="min-h-screen pt-16 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">

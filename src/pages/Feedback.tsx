@@ -82,12 +82,12 @@ const Feedback = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-muted/30">
+    <div className="min-h-screen pt-16 bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <MessageSquare className="h-16 w-16 text-primary mx-auto mb-6 animate-pulse-glow" />
-          <h1 className="text-4xl font-bold mb-4 gradient-text">Share Your Feedback</h1>
+          <h1 className="text-4xl font-bold mb-4 gradient-text">Feedback</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Your input helps us improve ClaimPulse and serve you better. We value every suggestion and review.
           </p>

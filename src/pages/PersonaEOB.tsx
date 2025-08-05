@@ -46,46 +46,55 @@ const PersonaEOB = () => {
     }
   ];
 
-  // Mock EOB data
-  const mockEOBData = {
-    patientName: "John Doe",
-    claimNumber: "CLM-2024-001234",
-    serviceDate: "2024-01-15",
-    provider: "Metropolitan Medical Center",
-    services: [
-      {
-        description: "Office Visit - Level 4",
-        code: "99214",
-        charges: 350.00,
-        allowedAmount: 280.00,
-        deductible: 50.00,
-        copay: 30.00,
-        coinsurance: 40.00,
-        paidByInsurance: 160.00,
-        patientResponsibility: 120.00
-      },
-      {
-        description: "Blood Test - Comprehensive",
-        code: "80053",
-        charges: 150.00,
-        allowedAmount: 120.00,
-        deductible: 0.00,
-        copay: 0.00,
-        coinsurance: 24.00,
-        paidByInsurance: 96.00,
-        patientResponsibility: 24.00
-      }
-    ],
-    totals: {
-      totalCharges: 500.00,
-      totalAllowed: 400.00,
-      totalDeductible: 50.00,
-      totalCopay: 30.00,
-      totalCoinsurance: 64.00,
-      totalPaidByInsurance: 256.00,
-      totalPatientResponsibility: 144.00
+  // Get current EOB data from test case or use default
+  const getCurrentEOBData = () => {
+    if (currentTestCase && currentTestCase.mockData.patientName) {
+      return currentTestCase.mockData;
     }
+    
+    // Default mock EOB data
+    return {
+      patientName: "John Doe",
+      claimNumber: "CLM-2024-001234",
+      serviceDate: "2024-01-15",
+      provider: "Metropolitan Medical Center",
+      services: [
+        {
+          description: "Office Visit - Level 4",
+          code: "99214",
+          charges: 350.00,
+          allowedAmount: 280.00,
+          deductible: 50.00,
+          copay: 30.00,
+          coinsurance: 40.00,
+          paidByInsurance: 160.00,
+          patientResponsibility: 120.00
+        },
+        {
+          description: "Blood Test - Comprehensive",
+          code: "80053",
+          charges: 150.00,
+          allowedAmount: 120.00,
+          deductible: 0.00,
+          copay: 0.00,
+          coinsurance: 24.00,
+          paidByInsurance: 96.00,
+          patientResponsibility: 24.00
+        }
+      ],
+      totals: {
+        totalCharges: 500.00,
+        totalAllowed: 400.00,
+        totalDeductible: 50.00,
+        totalCopay: 30.00,
+        totalCoinsurance: 64.00,
+        totalPaidByInsurance: 256.00,
+        totalPatientResponsibility: 144.00
+      }
+    };
   };
+
+  const eobData = getCurrentEOBData();
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -98,15 +107,13 @@ const PersonaEOB = () => {
       // Simulate processing time
       await new Promise(resolve => setTimeout(resolve, 2500));
       
-      // Get next test case and apply its persona
+      // Get next test case for varied sample data
       const testCase = nextTestCase();
-      const newPersona = testCase.mockData.targetPersona;
-      setSelectedPersona(newPersona);
       
       // Show success message
       toast({
         title: "Document Analyzed Successfully",
-        description: `EOB analyzed for ${newPersona} persona - ${testCase.name}`,
+        description: `EOB processed - ${testCase.name}. Select a mode to view the data.`,
       });
     } finally {
       setIsLoading(false);
@@ -123,14 +130,14 @@ const PersonaEOB = () => {
           <div className="grid grid-cols-1 gap-6">
             <div className="text-center p-6 bg-primary/10 rounded-lg">
               <div className="text-4xl font-bold text-primary mb-2">
-                ${mockEOBData.totals.totalPatientResponsibility.toFixed(2)}
+                ${eobData.totals.totalPatientResponsibility.toFixed(2)}
               </div>
               <div className="text-xl text-muted-foreground">You Need to Pay</div>
             </div>
             
             <div className="text-center p-6 bg-green-100 rounded-lg">
               <div className="text-4xl font-bold text-green-600 mb-2">
-                ${mockEOBData.totals.totalPaidByInsurance.toFixed(2)}
+                ${eobData.totals.totalPaidByInsurance.toFixed(2)}
               </div>
               <div className="text-xl text-muted-foreground">Insurance Paid</div>
             </div>
@@ -138,7 +145,7 @@ const PersonaEOB = () => {
 
           <div className="space-y-4">
             <h3 className="text-2xl font-semibold">Services You Received:</h3>
-            {mockEOBData.services.map((service, index) => (
+            {eobData.services.map((service, index) => (
               <div key={index} className="border-2 rounded-lg p-4 space-y-2">
                 <div className="text-xl font-medium">{service.description}</div>
                 <div className="text-lg">You pay: <span className="font-bold text-primary">${service.patientResponsibility.toFixed(2)}</span></div>
@@ -156,7 +163,7 @@ const PersonaEOB = () => {
       <Card className="feature-card">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Explanation of Benefits - {mockEOBData.claimNumber}</span>
+            <span>Explanation of Benefits - {eobData.claimNumber}</span>
             <Button variant="outline" size="sm">
               <BarChart3 className="h-4 w-4 mr-2" />
               Export Data
@@ -179,7 +186,7 @@ const PersonaEOB = () => {
                 </tr>
               </thead>
               <tbody>
-                {mockEOBData.services.map((service, index) => (
+                {eobData.services.map((service, index) => (
                   <tr key={index} className="border-b">
                     <td className="p-2">
                       <div className="font-medium">{service.description}</div>
@@ -196,13 +203,13 @@ const PersonaEOB = () => {
                 ))}
                 <tr className="border-b-2 border-primary font-bold">
                   <td className="p-2">TOTALS</td>
-                  <td className="text-right p-2">${mockEOBData.totals.totalCharges.toFixed(2)}</td>
-                  <td className="text-right p-2">${mockEOBData.totals.totalAllowed.toFixed(2)}</td>
-                  <td className="text-right p-2">${mockEOBData.totals.totalDeductible.toFixed(2)}</td>
-                  <td className="text-right p-2">${mockEOBData.totals.totalCopay.toFixed(2)}</td>
-                  <td className="text-right p-2">${mockEOBData.totals.totalCoinsurance.toFixed(2)}</td>
-                  <td className="text-right p-2 text-green-600">${mockEOBData.totals.totalPaidByInsurance.toFixed(2)}</td>
-                  <td className="text-right p-2 text-primary">${mockEOBData.totals.totalPatientResponsibility.toFixed(2)}</td>
+                  <td className="text-right p-2">${eobData.totals.totalCharges.toFixed(2)}</td>
+                  <td className="text-right p-2">${eobData.totals.totalAllowed.toFixed(2)}</td>
+                  <td className="text-right p-2">${eobData.totals.totalDeductible.toFixed(2)}</td>
+                  <td className="text-right p-2">${eobData.totals.totalCopay.toFixed(2)}</td>
+                  <td className="text-right p-2">${eobData.totals.totalCoinsurance.toFixed(2)}</td>
+                  <td className="text-right p-2 text-green-600">${eobData.totals.totalPaidByInsurance.toFixed(2)}</td>
+                  <td className="text-right p-2 text-primary">${eobData.totals.totalPatientResponsibility.toFixed(2)}</td>
                 </tr>
               </tbody>
             </table>
@@ -218,7 +225,7 @@ const PersonaEOB = () => {
         <CardHeader>
           <CardTitle className="text-2xl flex items-center">
             <Home className="h-6 w-6 mr-2" />
-            Family Medical Bill for {mockEOBData.patientName}
+            Family Medical Bill for {eobData.patientName}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -226,15 +233,15 @@ const PersonaEOB = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-blue-100 rounded-lg">
               <DollarSign className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-blue-600">${mockEOBData.totals.totalCharges.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-blue-600">${eobData.totals.totalCharges.toFixed(2)}</div>
               <div className="text-sm text-muted-foreground">Total Bill</div>
             </div>
             <div className="text-center p-4 bg-green-100 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">${mockEOBData.totals.totalPaidByInsurance.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-green-600">${eobData.totals.totalPaidByInsurance.toFixed(2)}</div>
               <div className="text-sm text-muted-foreground">Insurance Helped</div>
             </div>
             <div className="text-center p-4 bg-orange-100 rounded-lg">
-              <div className="text-2xl font-bold text-orange-600">${mockEOBData.totals.totalPatientResponsibility.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-orange-600">${eobData.totals.totalPatientResponsibility.toFixed(2)}</div>
               <div className="text-sm text-muted-foreground">Your Part</div>
             </div>
           </div>
@@ -242,7 +249,7 @@ const PersonaEOB = () => {
           {/* Service Breakdown */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">What happened at your visit:</h3>
-            {mockEOBData.services.map((service, index) => (
+            {eobData.services.map((service, index) => (
               <div key={index} className="border rounded-lg p-4 bg-gradient-to-r from-primary/5 to-secondary/5">
                 <div className="flex justify-between items-start mb-2">
                   <div>
@@ -318,19 +325,19 @@ const PersonaEOB = () => {
               <h4 className="font-semibold mb-3">Cost Breakdown Analysis</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-3 border rounded">
-                  <div className="text-lg font-bold">${(mockEOBData.totals.totalCharges - mockEOBData.totals.totalAllowed).toFixed(2)}</div>
+                  <div className="text-lg font-bold">${(eobData.totals.totalCharges - eobData.totals.totalAllowed).toFixed(2)}</div>
                   <div className="text-xs text-muted-foreground">Provider Discount</div>
                 </div>
                 <div className="text-center p-3 border rounded">
-                  <div className="text-lg font-bold">{((mockEOBData.totals.totalPaidByInsurance / mockEOBData.totals.totalAllowed) * 100).toFixed(1)}%</div>
+                  <div className="text-lg font-bold">{((eobData.totals.totalPaidByInsurance / eobData.totals.totalAllowed) * 100).toFixed(1)}%</div>
                   <div className="text-xs text-muted-foreground">Insurance Coverage</div>
                 </div>
                 <div className="text-center p-3 border rounded">
-                  <div className="text-lg font-bold">{((mockEOBData.totals.totalPatientResponsibility / mockEOBData.totals.totalAllowed) * 100).toFixed(1)}%</div>
+                  <div className="text-lg font-bold">{((eobData.totals.totalPatientResponsibility / eobData.totals.totalAllowed) * 100).toFixed(1)}%</div>
                   <div className="text-xs text-muted-foreground">Patient Share</div>
                 </div>
                 <div className="text-center p-3 border rounded">
-                  <div className="text-lg font-bold">{mockEOBData.services.length}</div>
+                  <div className="text-lg font-bold">{eobData.services.length}</div>
                   <div className="text-xs text-muted-foreground">Service Lines</div>
                 </div>
               </div>
@@ -351,7 +358,7 @@ const PersonaEOB = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockEOBData.services.map((service, index) => (
+                    {eobData.services.map((service, index) => (
                       <tr key={index}>
                         <td className="border p-2">{service.description}</td>
                         <td className="border p-2 text-right">{((service.allowedAmount / service.charges) * 100).toFixed(1)}%</td>
@@ -385,7 +392,7 @@ const PersonaEOB = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-muted/30">
+    <div className="min-h-screen pt-16 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">

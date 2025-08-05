@@ -224,35 +224,170 @@ export const useTestCases = (pageType: string) => {
         return [
           {
             id: 1,
-            name: "Senior-Friendly EOB",
-            description: "Large fonts and simple language for senior users",
-            expectedResult: "Clear, large text with audio narration options",
+            name: "Complex Cardiology Visit",
+            description: "Multi-service cardiology consultation with diagnostics",
+            expectedResult: "EOB with cardiology services and varied persona views",
             mockData: {
-              targetPersona: "senior",
-              features: ["Large fonts", "High contrast", "Voice narration", "Simple language"],
-              adaptations: ["Increased text size to 18px", "Added voice controls", "Simplified terminology"]
+              patientName: "Margaret Johnson",
+              claimNumber: "CLM-2024-002345",
+              serviceDate: "2024-02-20",
+              provider: "Central Heart Institute",
+              services: [
+                {
+                  description: "Cardiology Consultation - Level 5",
+                  code: "99215",
+                  charges: 450.00,
+                  allowedAmount: 380.00,
+                  deductible: 100.00,
+                  copay: 50.00,
+                  coinsurance: 46.00,
+                  paidByInsurance: 184.00,
+                  patientResponsibility: 196.00
+                },
+                {
+                  description: "Echocardiogram",
+                  code: "93306",
+                  charges: 850.00,
+                  allowedAmount: 720.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 144.00,
+                  paidByInsurance: 576.00,
+                  patientResponsibility: 144.00
+                },
+                {
+                  description: "Stress Test",
+                  code: "93017",
+                  charges: 600.00,
+                  allowedAmount: 480.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 96.00,
+                  paidByInsurance: 384.00,
+                  patientResponsibility: 96.00
+                }
+              ],
+              totals: {
+                totalCharges: 1900.00,
+                totalAllowed: 1580.00,
+                totalDeductible: 100.00,
+                totalCopay: 50.00,
+                totalCoinsurance: 286.00,
+                totalPaidByInsurance: 1144.00,
+                totalPatientResponsibility: 436.00
+              }
             }
           },
           {
             id: 2,
-            name: "Professional EOB Analysis",
-            description: "Detailed tabular data for healthcare professionals",
-            expectedResult: "Comprehensive tables with detailed breakdowns",
+            name: "Pediatric Emergency Room",
+            description: "Child's emergency room visit with family coverage",
+            expectedResult: "Emergency EOB with family-friendly interface options",
             mockData: {
-              targetPersona: "professional",
-              features: ["Detailed tables", "Medical codes", "Cost breakdowns", "Analytics"],
-              adaptations: ["Added CPT codes", "Detailed cost analysis", "Professional terminology"]
+              patientName: "Emma Rodriguez (Age 8)",
+              claimNumber: "CLM-2024-003456",
+              serviceDate: "2024-03-15",
+              provider: "Children's Emergency Center",
+              services: [
+                {
+                  description: "ER Visit - High Complexity",
+                  code: "99285",
+                  charges: 1200.00,
+                  allowedAmount: 950.00,
+                  deductible: 0.00,
+                  copay: 150.00,
+                  coinsurance: 0.00,
+                  paidByInsurance: 800.00,
+                  patientResponsibility: 150.00
+                },
+                {
+                  description: "X-Ray - Arm (2 views)",
+                  code: "73060",
+                  charges: 350.00,
+                  allowedAmount: 280.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 56.00,
+                  paidByInsurance: 224.00,
+                  patientResponsibility: 56.00
+                }
+              ],
+              totals: {
+                totalCharges: 1550.00,
+                totalAllowed: 1230.00,
+                totalDeductible: 0.00,
+                totalCopay: 150.00,
+                totalCoinsurance: 56.00,
+                totalPaidByInsurance: 1024.00,
+                totalPatientResponsibility: 206.00
+              }
             }
           },
           {
             id: 3,
-            name: "Family-Friendly EOB",
-            description: "Visual and emoji-rich interface for families",
-            expectedResult: "Colorful interface with emojis and summaries",
+            name: "Annual Executive Physical",
+            description: "Comprehensive executive health assessment with analytics",
+            expectedResult: "Executive physical EOB with professional analytics view",
             mockData: {
-              targetPersona: "family",
-              features: ["Emojis", "Color coding", "Simple summaries", "Visual icons"],
-              adaptations: ["Added emoji indicators", "Color-coded sections", "Family-friendly language"]
+              patientName: "Dr. Robert Chen",
+              claimNumber: "CLM-2024-004567",
+              serviceDate: "2024-04-10",
+              provider: "Executive Health Partners",
+              services: [
+                {
+                  description: "Comprehensive Physical Exam",
+                  code: "99396",
+                  charges: 750.00,
+                  allowedAmount: 600.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 120.00,
+                  paidByInsurance: 480.00,
+                  patientResponsibility: 120.00
+                },
+                {
+                  description: "Complete Metabolic Panel",
+                  code: "80053",
+                  charges: 200.00,
+                  allowedAmount: 160.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 32.00,
+                  paidByInsurance: 128.00,
+                  patientResponsibility: 32.00
+                },
+                {
+                  description: "Lipid Panel",
+                  code: "80061",
+                  charges: 150.00,
+                  allowedAmount: 120.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 24.00,
+                  paidByInsurance: 96.00,
+                  patientResponsibility: 24.00
+                },
+                {
+                  description: "EKG Interpretation",
+                  code: "93000",
+                  charges: 100.00,
+                  allowedAmount: 80.00,
+                  deductible: 0.00,
+                  copay: 0.00,
+                  coinsurance: 16.00,
+                  paidByInsurance: 64.00,
+                  patientResponsibility: 16.00
+                }
+              ],
+              totals: {
+                totalCharges: 1200.00,
+                totalAllowed: 960.00,
+                totalDeductible: 0.00,
+                totalCopay: 0.00,
+                totalCoinsurance: 192.00,
+                totalPaidByInsurance: 768.00,
+                totalPatientResponsibility: 192.00
+              }
             }
           }
         ];

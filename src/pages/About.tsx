@@ -3,10 +3,10 @@ import { Shield, Heart, Users, Target, Mail, Github, Linkedin } from "lucide-rea
 
 const About = () => {
   return (
-    <div className="min-h-screen pt-16">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div className="min-h-screen pt-16 bg-background">
+      {/* Header */}
+      <div className="text-center py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Shield className="h-16 w-16 text-primary mx-auto mb-6 animate-pulse-glow" />
           <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
             About ClaimPulse
@@ -16,10 +16,10 @@ const About = () => {
             making complex insurance processes simple and accessible for everyone.
           </p>
         </div>
-      </section>
+      </div>
 
       {/* Vision Section */}
-      <section className="py-16">
+      <div className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -46,10 +46,10 @@ const About = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Use Cases */}
-      <section className="py-16 bg-muted/30">
+      <div className="py-16 bg-muted/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Use Cases</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -83,10 +83,10 @@ const About = () => {
             })}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Contact & Credits */}
-      <section className="py-16">
+      <div className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact */}
@@ -135,7 +135,7 @@ const About = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -154,12 +154,12 @@ const Documentation = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-muted/30">
+    <div className="min-h-screen pt-16 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <FileCheck className="h-16 w-16 text-primary mx-auto mb-6 animate-pulse-glow" />
-          <h1 className="text-4xl font-bold mb-4 gradient-text">Documentation Assistant</h1>
+          <h1 className="text-4xl font-bold mb-4 gradient-text">Document Assistant</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Choose your claim type, upload required documents, and validate completeness with AI assistance.
           </p>
