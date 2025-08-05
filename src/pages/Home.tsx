@@ -88,7 +88,13 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen pt-16 relative">
+      {/* Home Page Background */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 dark:opacity-3 -z-10" 
+        style={{ backgroundImage: `url(${stethoscopeBg})` }}
+      />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
         <div className="absolute inset-0 gradient-animate opacity-30"></div>
