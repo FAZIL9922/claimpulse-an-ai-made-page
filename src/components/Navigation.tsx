@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { 
   Moon, 
   Sun, 
@@ -15,13 +17,17 @@ import {
   Users, 
   BookOpen,
   MessageSquare,
-  Info
+  Info,
+  Brain,
+  Zap
 } from "lucide-react";
 
 const Navigation = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [aiMode, setAiMode] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (darkMode) {
@@ -30,6 +36,15 @@ const Navigation = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  const handleAiModeToggle = (checked: boolean) => {
+    setAiMode(checked);
+    if (checked) {
+      navigate("/ai-demo");
+    } else {
+      navigate("/");
+    }
+  };
 
   const navigation = [
     { name: "Home", href: "/", icon: Shield },
@@ -74,8 +89,24 @@ const Navigation = () => {
             })}
           </div>
 
-          {/* Theme Toggle */}
-          <div className="flex items-center space-x-2">
+          {/* AI Mode Toggle & Theme Toggle */}
+          <div className="flex items-center space-x-3">
+            {/* AI Mode Toggle */}
+            <div className="flex items-center space-x-2">
+              <Badge variant={aiMode ? "default" : "secondary"} className="text-xs">
+                {aiMode ? (
+                  <><Brain className="h-3 w-3 mr-1" />AI Mode</>
+                ) : (
+                  <><Zap className="h-3 w-3 mr-1" />Demo</>
+                )}
+              </Badge>
+              <Switch
+                checked={aiMode}
+                onCheckedChange={handleAiModeToggle}
+                className="data-[state=checked]:bg-primary"
+              />
+            </div>
+            
             <Button
               variant="outline"
               size="sm"

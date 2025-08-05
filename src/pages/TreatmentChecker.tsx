@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, AlertTriangle, Search, Heart, DollarSign, Clock } from "lucide-react";
+import { CheckCircle, AlertTriangle, Search, Heart, DollarSign, Clock, RotateCcw } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useTestCases } from "@/hooks/useTestCases";
 
 // ===========================
 // TREATMENT CHECKER MODULE
@@ -18,15 +21,11 @@ import { CheckCircle, AlertTriangle, Search, Heart, DollarSign, Clock } from "lu
 // import { CoverageCalculatorService } from '@/services/coverageCalculator'
 
 const TreatmentChecker = () => {
-  // Add your Treatment Checker logic here
-  // - Real-time coverage verification
-  // - Treatment database lookup
-  // - Alternative treatment suggestions
-  // - Cost estimation algorithms
   const [treatment, setTreatment] = useState("");
   const [checking, setChecking] = useState(false);
   const [results, setResults] = useState<any>(null);
   const { toast } = useToast();
+  const { testCases, currentTestCase, nextTestCase, currentIndex } = useTestCases('treatment-checker');
 
   const handleCheck = async () => {
     if (!treatment.trim()) {
@@ -43,8 +42,11 @@ const TreatmentChecker = () => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Mock results based on treatment input
-    const mockResults = {
+    // Use test case data or mock results
+    const testCaseResult = currentTestCase ? {
+      ...currentTestCase.mockData,
+      treatment: treatment
+    } : {
       treatment: treatment,
       covered: treatment.toLowerCase().includes("physical therapy") || 
                treatment.toLowerCase().includes("mri") ||
@@ -75,12 +77,17 @@ const TreatmentChecker = () => {
       ]
     };
 
-    setResults(mockResults);
+    setResults(testCaseResult);
     setChecking(false);
+
+    // Auto-cycle to next test case
+    setTimeout(() => {
+      nextTestCase();
+    }, 1000);
 
     toast({
       title: "Coverage Check Complete",
-      description: `Found coverage information for ${treatment}`
+      description: currentTestCase ? `Test Case ${currentIndex + 1}: ${currentTestCase.name}` : `Found coverage information for ${treatment}`
     });
   };
 
@@ -90,7 +97,7 @@ const TreatmentChecker = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-muted/30">
+    <div className="min-h-screen pt-16 bg-background transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -99,6 +106,18 @@ const TreatmentChecker = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Check if your treatment is covered by your insurance and discover alternatives with better coverage.
           </p>
+          
+          {/* Test Case Info */}
+          {currentTestCase && (
+            <div className="mt-6 max-w-2xl mx-auto">
+              <Badge variant="outline" className="mb-2">
+                Test Case {currentIndex + 1} of {testCases.length}
+              </Badge>
+              <div className="text-sm text-muted-foreground">
+                <strong>{currentTestCase.name}:</strong> {currentTestCase.description}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -127,21 +146,18 @@ const TreatmentChecker = () => {
                 disabled={checking || !treatment.trim()}
                 className="w-full"
               >
-                {checking ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Checking Coverage...
-                  </>
-                ) : (
-                  <>
-                    <Search className="mr-2 h-4 w-4" />
-                    Check Coverage
-                  </>
-                )}
+                {checking ? "Checking Coverage..." : "Check Coverage"}
               </Button>
+
+              {checking && (
+                <div className="mt-4">
+                  <LoadingSpinner text="AI Analyzing..." size="sm" />
+                </div>
+              )}
 
               {results && (
                 <Button variant="outline" onClick={resetCheck} className="w-full">
+                  <RotateCcw className="h-4 w-4 mr-2" />
                   New Search
                 </Button>
               )}

@@ -91,17 +91,13 @@ const Home = () => {
     <div className="min-h-screen pt-16 relative">
       {/* Home Page Background */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 dark:opacity-3 -z-10" 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-8 dark:opacity-5 -z-10" 
         style={{ backgroundImage: `url(${stethoscopeBg})` }}
       />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 dark:from-primary/5 dark:via-secondary/5 dark:to-accent/5">
         <div className="absolute inset-0 gradient-animate opacity-30"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-10" 
-          style={{ backgroundImage: `url(${stethoscopeBg})` }}
-        ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <div className="flex justify-center mb-6">
@@ -141,7 +137,7 @@ const Home = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-background/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -185,7 +181,7 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/5 to-secondary/5">
+      <section className="py-16 bg-gradient-to-r from-primary/5 to-secondary/5 dark:from-primary/3 dark:to-secondary/3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">

@@ -14,6 +14,7 @@ import PersonaEOB from "./pages/PersonaEOB";
 import Glossary from "./pages/Glossary";
 import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
+import AIDemoPage from "./components/AIDemo";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/persona-eob" element={<PersonaEOB />} />
           <Route path="/glossary" element={<Glossary />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/ai-demo" element={<AIDemoPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
